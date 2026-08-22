@@ -2,6 +2,7 @@ import os
 import gradio as gr
 from google import genai
 
+# API Key নিশ্চিত করা
 API_KEY = os.environ.get("GEMINI_API_KEY")
 client = genai.Client(api_key=API_KEY)
 
@@ -13,12 +14,15 @@ Always be polite, helpful, and friendly in your responses.
 """
 
 def chat_function(message, history):
-    response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents=message,
-        config={"system_instruction": SYSTEM_INSTRUCTION}
-    )
-    return response.text
+    try:
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=message,
+            config={"system_instruction": SYSTEM_INSTRUCTION}
+        )
+        return response.text
+    except Exception as e:
+        return f"Error: {str(e)}"
 
 demo = gr.ChatInterface(fn=chat_function, title="Protik AI - Assistant")
 
