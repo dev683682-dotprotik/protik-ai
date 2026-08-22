@@ -2,11 +2,9 @@ import os
 import gradio as gr
 from google import genai
 
-# Render Environment Variable থেকে API Key সংগ্রহ
 API_KEY = os.environ.get("GEMINI_API_KEY")
 client = genai.Client(api_key=API_KEY)
 
-# কাস্টম ব্যাকগ্রাউন্ড নির্দেশনা
 SYSTEM_INSTRUCTION = """
 Your name is Protik AI.
 You were created by Protik Deb, who is a Professional Digital Marketer.
@@ -22,9 +20,7 @@ def chat_function(message, history):
     )
     return response.text
 
-# চ্যাটবট ইন্টারফেস তৈরি
 demo = gr.ChatInterface(fn=chat_function, title="Protik AI - Assistant")
 
-# সার্ভারে অ্যাপ চালু করা
 if __name__ == "__main__":
     demo.launch(server_name="0.0.0.0", server_port=7860)
